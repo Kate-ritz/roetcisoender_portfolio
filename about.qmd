@@ -2,7 +2,9 @@
 title: "About"
 ---
 
-About this site
+### Kate Roetcisoender
+
+I am an undergraduate student at Cal State University, Monterey Bay majoring in marine science and minoring in statistics, and graduating in Spring 2025. I have worked in Dr. James Lindholm's Image Analysis and Fish Ecology Lab for almost three years and have extensive experience in the field, analyzing video, and data processing.
 
 ```{r}
 1 + 1
