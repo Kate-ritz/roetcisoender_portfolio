@@ -1,10 +1,28 @@
 ---
-title: "roetcisoender_portfolio"
+title: "Kate Roetcisoender"
+about:
+  template: jolla
+  image: Profile_pic.png
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/kaitlin-roetcisoender-391086351/
+    - icon: github
+      text: Github
+      href: https://github.com/Kate-ritz/
 ---
 
-This is a Quarto website.
+Kate Roetcisoender is a marine science student at Cal State Monterey Bay, minoring in statistics.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+## Education
+
+California State University, Monterey Bay \| Seaside, CA
+
+B.S. in Marine Science \| 2020 - 2025
+
+## Experience
+
+Department of Marine Science \| Undergraduate Research Assistant \| May 2022 - present
 
 ```{r}
 1 + 1

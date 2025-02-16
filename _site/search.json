@@ -2,15 +2,29 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "roetcisoender_portfolio",
+    "title": "Kate Roetcisoender",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Kate Roetcisoender is a marine science student at Cal State Monterey Bay, minoring in statistics."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Kate Roetcisoender",
+    "section": "Education",
+    "text": "Education\nCalifornia State University, Monterey Bay | Seaside, CA\nB.S. in Marine Science | 2020 - 2025"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Kate Roetcisoender",
+    "section": "Experience",
+    "text": "Experience\nDepartment of Marine Science | Undergraduate Research Assistant | May 2022 - present\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Kate Roetcisoender\nI am an undergraduate student at Cal State University, Monterey Bay majoring in marine science and minoring in statistics, and graduating in Spring 2025. I have worked in Dr. James Lindholm’s Image Analysis and Fish Ecology Lab for almost three years and have extensive experience in the field, analyzing video, and data processing.\n\n1 + 1\n\n[1] 2"
   }
 ]
