@@ -24,6 +24,3 @@ B.S. in Marine Science \| 2020 - 2025
 
 Department of Marine Science \| Undergraduate Research Assistant \| May 2022 - present
 
-```{r}
-1 + 1
-```

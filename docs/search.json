@@ -18,7 +18,7 @@
     "href": "index.html#experience",
     "title": "Kate Roetcisoender",
     "section": "Experience",
-    "text": "Experience\nDepartment of Marine Science | Undergraduate Research Assistant | May 2022 - present\n\n1 + 1\n\n[1] 2"
+    "text": "Experience\nDepartment of Marine Science | Undergraduate Research Assistant | May 2022 - present"
   },
   {
     "objectID": "about.html",
@@ -26,5 +26,33 @@
     "title": "About",
     "section": "",
     "text": "Kate Roetcisoender\nI am an undergraduate student at Cal State University, Monterey Bay majoring in marine science and minoring in statistics, and graduating in Spring 2025. I have worked in Dr. James Lindholm’s Image Analysis and Fish Ecology Lab for almost three years and have extensive experience in the field, analyzing video, and data processing.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "portfolio-part-1/portfolio-part-1.html",
+    "href": "portfolio-part-1/portfolio-part-1.html",
+    "title": "portfolio-part-1",
+    "section": "",
+    "text": "1. Identify your data source.\nThese data come from sampling efforts that I participated in over the summer of 2023 for a marine protected area effectiveness evaluation through the Lindholm imagery analysis lab.\n2. Describe your data, including variables and data types.\nDrop_ID - sample (drop) identifier\nDate - YYYYMMDD, when the video was taken\nLocation - the marine protected area that was sampled\nDesignation - whether the video was taken inside the MPA or outside (REF)\n3D Points - number of fish counted in drop\n3D Lengths - number of fish measured in drop\nDepth (m) - depth of drop in meters\nHabitat - Hard = all rock, mixed-hard = mostly rock, mixed-soft = mostly sand/mud, soft = all sand/mud\nRelief - High = &gt;2 meters depth change, Medium = 1-2 meter, Low = &lt;1 meter\nRugosity - The complexity (holes, cracks, overhangs, etc.) of the habitat\nSimpson_div - Gini-Simpson diversity index\nShannon_div - Shannon-Wiener diversity index\n3. Identify the research questions you want to answer.\nHow does species diversity vary inside and outside of marine protected areas?\nHow does relative abundance and size vary inside and out of MPAs?\nHow does habitat vary inside and out of MPAs?"
+  },
+  {
+    "objectID": "portfolio-part-1/portfolio-part-1.html#data-description",
+    "href": "portfolio-part-1/portfolio-part-1.html#data-description",
+    "title": "portfolio-part-1",
+    "section": "",
+    "text": "1. Identify your data source.\nThese data come from sampling efforts that I participated in over the summer of 2023 for a marine protected area effectiveness evaluation through the Lindholm imagery analysis lab.\n2. Describe your data, including variables and data types.\nDrop_ID - sample (drop) identifier\nDate - YYYYMMDD, when the video was taken\nLocation - the marine protected area that was sampled\nDesignation - whether the video was taken inside the MPA or outside (REF)\n3D Points - number of fish counted in drop\n3D Lengths - number of fish measured in drop\nDepth (m) - depth of drop in meters\nHabitat - Hard = all rock, mixed-hard = mostly rock, mixed-soft = mostly sand/mud, soft = all sand/mud\nRelief - High = &gt;2 meters depth change, Medium = 1-2 meter, Low = &lt;1 meter\nRugosity - The complexity (holes, cracks, overhangs, etc.) of the habitat\nSimpson_div - Gini-Simpson diversity index\nShannon_div - Shannon-Wiener diversity index\n3. Identify the research questions you want to answer.\nHow does species diversity vary inside and outside of marine protected areas?\nHow does relative abundance and size vary inside and out of MPAs?\nHow does habitat vary inside and out of MPAs?"
+  },
+  {
+    "objectID": "portfolio-part-1/portfolio-part-1.html#data-visualization",
+    "href": "portfolio-part-1/portfolio-part-1.html#data-visualization",
+    "title": "portfolio-part-1",
+    "section": "Data Visualization",
+    "text": "Data Visualization\n1. What do you want your final visualizations to look like?\nHow does species diversity vary inside and outside of marine protected areas?\n\nBoxplot of diversity by designation with all locations included, then faceted by location.\n\nHow does relative abundance and size vary inside and out of MPAs?\n\nBar chart of average abundances by designation\nRidgeplot of sizes by designation, with vertical lines showing where the mean or median is.\n\nHow does habitat vary inside and out of MPAs?\n\nBar plots comparing habitat metrics by designation, faceted by location.\n\n2. What do you want to highlight on your final visualizations in order to answer your research questions? How do you plan to do that?\n\nI want to highlight potential differences, if any, between inside and outside of marine protected areas. I plan on doing that with lines, annotations, and captions.\n\n3. What is missing from your data or would need to change in your data to create these visualizations?\n\nI need to get the average fish sizes by drop, which I will do by summarizing another data set and joining it to the main one I will be using (more details below)."
+  },
+  {
+    "objectID": "portfolio-part-1/portfolio-part-1.html#data-cleaning",
+    "href": "portfolio-part-1/portfolio-part-1.html#data-cleaning",
+    "title": "portfolio-part-1",
+    "section": "Data Cleaning",
+    "text": "Data Cleaning\n1. Do you need to reformat any variables into different types (e.g. factors, time, dates, strings)? Or remove information from variable values?\nYes, OpCode will need to be reclassified as categorical, not numeric.\n2. Do you need to deal with any missing data, especially missing data coded other than NA?\nThere are some missing values for habitat, relief, and rugosity. These are already coded as NA.\n3. Do you need to filter your data? How?\nNo\n4. Do you need to create any new variables? What variables? How?\nYes, I would like to create a species richness variable by grouping by drop then counting the unique species, then joining that table to the drop data. I would also like to create an average fish length variable by grouping by drop then calculating the mean of lengths and joining that to the drop data.\n5. Do you need to add new data (join) to your data? What data? How?\nSee above question. The data added comes from the same sampling effort, but looks at individual fish instead of the overall drop.\n6. Are there any variables you can exclude from your data?\nYes, date and one of the diversity indices can be excluded.\n7. Do you need pivot your data in any way? Why? How?\nNo.\n8. Do you need to summarize any of the variables? Which ones? How?\nSee question 4.\n9. What other aspects of your data need to be “fixed” in order to make your data visualizations?\nNone (hopefully)."
   }
 ]

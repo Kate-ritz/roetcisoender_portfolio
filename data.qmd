@@ -1,0 +1,62 @@
+---
+title: "data"
+format: html
+---
+
+```{r}
+library(mosaic)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+drop <- read_csv("raw-data/drop.csv", col_types = list(Drop_ID = col_character()))
+points <- read_csv("raw-data/points.csv", col_types = list(OpCode = col_character()))
+lengths <- read_csv("raw-data/lengths.csv", col_types = list(OpCode = col_character()))
+```
+
+```{r}
+head(drop)
+points |> 
+  select(OpCode, Common_name) |> 
+  group_by(OpCode) |> 
+  summarize(n_distinct(Common_name)) |> 
+  left_join(drop, by = c("OpCode" = "Drop_ID")) |> 
+  rename(Spp_richness = 'n_distinct(Common_name)')
+
+```
+
+```{r}
+points |> 
+  select(OpCode, Common_name) |> 
+  group_by(OpCode) |> 
+  summarize(n_distinct(Common_name)) |> 
+  left_join(drop, by = c("OpCode" = "Drop_ID")) |> 
+  rename(Spp_richness = 'n_distinct(Common_name)') |> 
+  ggplot(aes(x = Designation, y = Spp_richness)) +
+  geom_boxplot() +
+  facet_grid(~ Location)
+```
+
+```{r}
+head(lengths)
+
+lengths |> 
+  select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
