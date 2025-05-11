@@ -1,6 +1,11 @@
 ---
-title: "data"
+title: "Example Data Problem"
 format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+embed-resources: true
 ---
 
 ```{r}
@@ -44,19 +49,3 @@ head(lengths)
 lengths |> 
   select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
