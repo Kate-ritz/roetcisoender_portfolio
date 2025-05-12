@@ -13,7 +13,12 @@ library(mosaic)
 library(tidyverse)
 library(ggplot2)
 library(ggridges)
+drop <- read_csv("raw-data/drop.csv", col_types = list(Drop_ID = col_character()))
+points <- read_csv("raw-data/points.csv", col_types = list(OpCode = col_character()))
+lengths <- read_csv("raw-data/lengths.csv", col_types = list(OpCode = col_character()))
+
 ```
+
 
 ### Data Description
 
@@ -21,22 +26,29 @@ These datasets are from a summer of data collected in 2023, with the purpose of 
 
 Here is the data: https://docs.google.com/spreadsheets/d/1KVd_7IsOHM9Xe1PDIf47Q4LnQt4J6QFjS5UL1i_GzpA/edit?gid=0#gid=0 
 
-Sheets:
+*Sheets*:
 
-Drop_data - information on each camera system deployment
+- Drop_data - information on each camera system deployment <br>
+- 3D_points - Each individual fish counted <br>
+- Lengths - The precise measurement of each fish able to be measured
 
-3D_points - Each individual fish counted
+*Variables of interest*:
 
-Lengths - The precise measurement of each fish able to be measured
+- OpCode OR Drop_ID - sample (drop) identifier <br>
+- Date - YYYYMMDD, when the video was taken <br>
+- Location - the marine protected area that was sampled <br>
+- Designation - whether the video was taken inside the MPA or outside (REF) <br>
+- 3D Points - number of fish counted in drop <br>
+- 3D Lengths - number of fish measured in drop <br>
+- Depth (m) - depth of drop in meters <br>
+- Simpson_div - Gini-Simpson diversity index <br>
+- Shannon_div - Shannon-Wiener diversity index <br>
+- Common_name - common name of each species of fish
 
 ### Data Cleaning
 
-```{r}
-drop <- read_csv("raw-data/drop.csv", col_types = list(Drop_ID = col_character()))
-points <- read_csv("raw-data/points.csv", col_types = list(OpCode = col_character()))
-lengths <- read_csv("raw-data/lengths.csv", col_types = list(OpCode = col_character()))
+For the first visualization, I started with the 3D_points data and pulled out just the columns of OpCode and Common_name. Then, grouping by OpCode, I counted the number of unique values for Common_name. This is calculating the number of different species seen per sample, or species richness. I then take this information and add it to the Drop_data sheet. I then make minor changes such as renaming variables and ordering values within variables before making the visualization. <br><br> 
 
-```
 
 ```{r}
 
@@ -53,6 +65,18 @@ write_csv(points_clean, file = "clean-data/points-clean.csv")
 ```
 
 ```{r}
+lengths_clean <- lengths |> 
+  select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name) |>
+  filter(Common_name != "Northern_Anchovy") |> 
+  mutate(length_cm = `Length (mm)`/10) |> 
+  mutate(Location = factor(Location, levels = c("Point_Buchon", "Point_Lobos", "Ano_Nuevo", "Montara"))) 
+
+write_csv(lengths_clean, file = "clean-data/lengths-clean.csv")
+```
+
+### Figure 1
+
+```{r}
 points_clean|> 
   ggplot(aes(x = Designation, 
              y = Spp_richness, 
@@ -63,7 +87,7 @@ points_clean|>
   labs(x = "Species Richness", 
        y = "MPA Designation", 
        title = "Species richness is generally higher in MPAs than reference sites",
-       alt = "There are four sets of two boxplots, from locations Point Buchon, Point Lobos, Ano Nuevo, and Montara. Each site has a boxplot for within the MPA and outside the MPA. The y-xis is species richness, which ranges from 0 to 12.5. The species richness appears higher in every MPA except Ano Nuevo") +
+       alt = "There are four sets of two boxplots, from locations Point Buchon, Point Lobos, Ano Nuevo, and Montara. Each site has a boxplot for within the MPA and outside the MPA. The y-xis is species richness, which ranges from 0 to 12.5. The species richness appears higher in every MPA except Ano Nuevo.") +
   scale_color_viridis_d(end = 0.7) +
   scale_fill_manual(values = c("lightgray", "darkgray")) +
   theme_minimal() +
@@ -71,15 +95,7 @@ points_clean|>
          color = "none")
 ```
 
-```{r}
-lengths_clean <- lengths |> 
-  select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name) |>
-  filter(Common_name != "Northern_Anchovy") |> 
-  mutate(length_cm = `Length (mm)`/10) |> 
-  mutate(Location = factor(Location, levels = c("Point_Buchon", "Point_Lobos", "Ano_Nuevo", "Montara"))) 
-
-write_csv(lengths_clean, file = "clean-data/lengths-clean.csv")
-```
+### Figure 2
 
 ```{r}
 lengths_clean |>   
@@ -89,11 +105,12 @@ lengths_clean |>
                           color = Location), 
                       jittered_points = TRUE, 
                       alpha = 0.5) +
-  labs(x = "Marine Protected Area Site",
-       y = "Length (cm)",
+  labs(y = "Marine Protected Area Site",
+       x = "Length (cm)",
        title = "Distributions of fish size by site",
-       alt = "") +
+       alt = "There are four density ridges, one for each site mentioned previously. The x axis is the size of fish in centimeters. The density ridges are filled with points each representing an individual fish. The ridges get higher based on how many points are in that size range. Ano Nuevo, Point Lobos, and Point Buchon had seemingly more big fish than Montara.") +
   scale_color_viridis_d(end = 0.7) +
-  guides(color = "none")
+  guides(color = "none") +
+  theme_minimal()
   
 ```
