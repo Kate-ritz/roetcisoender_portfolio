@@ -12,40 +12,71 @@ embed-resources: true
 library(mosaic)
 library(tidyverse)
 library(ggplot2)
+library(ggridges)
 ```
 
 ```{r}
 drop <- read_csv("raw-data/drop.csv", col_types = list(Drop_ID = col_character()))
 points <- read_csv("raw-data/points.csv", col_types = list(OpCode = col_character()))
 lengths <- read_csv("raw-data/lengths.csv", col_types = list(OpCode = col_character()))
-```
-
-```{r}
-head(drop)
-points |> 
-  select(OpCode, Common_name) |> 
-  group_by(OpCode) |> 
-  summarize(n_distinct(Common_name)) |> 
-  left_join(drop, by = c("OpCode" = "Drop_ID")) |> 
-  rename(Spp_richness = 'n_distinct(Common_name)')
 
 ```
 
 ```{r}
-points |> 
+
+points_clean <- points |> 
   select(OpCode, Common_name) |> 
   group_by(OpCode) |> 
   summarize(n_distinct(Common_name)) |> 
   left_join(drop, by = c("OpCode" = "Drop_ID")) |> 
   rename(Spp_richness = 'n_distinct(Common_name)') |> 
-  ggplot(aes(x = Designation, y = Spp_richness)) +
-  geom_boxplot() +
-  facet_grid(~ Location)
+  mutate(Location = factor(Location, levels = c("Point_Buchon", "Point_Lobos", "Ano_Nuevo", "Montara")))
+
+write_csv(points_clean, file = "clean-data/points-clean.csv")
+
 ```
 
 ```{r}
-head(lengths)
-
-lengths |> 
-  select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name)
+points_clean|> 
+  ggplot(aes(x = Designation, 
+             y = Spp_richness, 
+             color = Location, 
+             fill = Designation)) +
+  geom_boxplot() +
+  facet_grid(~ Location)+
+  labs(x = "Species Richness", 
+       y = "MPA Designation", 
+       title = "Species richness is generally higher in MPAs than reference sites") +
+  scale_color_viridis_d(end = 0.7) +
+  scale_fill_manual(values = c("lightgray", "darkgray")) +
+  theme_minimal() +
+  guides(fill = "none", 
+         color = "none")
 ```
+
+```{r}
+lengths_clean <- lengths |> 
+  select(Date, Location, Designation, `Length (mm)`, OpCode, Common_name) |>
+  filter(Common_name != "Northern_Anchovy") |> 
+  mutate(length_cm = `Length (mm)`/10) |> 
+  mutate(Location = factor(Location, levels = c("Point_Buchon", "Point_Lobos", "Ano_Nuevo", "Montara"))) 
+
+write_csv(lengths_clean, file = "clean-data/lengths-clean.csv")
+```
+
+```{r}
+lengths_clean |>   
+  ggplot() +
+  geom_density_ridges(aes(x = length_cm, 
+                          y = Location, 
+                          color = Location), 
+                      jittered_points = TRUE, 
+                      alpha = 0.5) +
+  labs(x = "Marine Protected Area Site",
+       y = "Length (cm)",
+       title = "Distributions of fish size by site") +
+  scale_color_viridis_d(end = 0.7) +
+  guides(color = "none")
+  
+```
+
