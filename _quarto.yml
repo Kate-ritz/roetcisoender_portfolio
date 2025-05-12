@@ -11,7 +11,7 @@ website:
       - href: about.qmd
         text: "About"
       - href: data_problem.qmd
-        text: "Example Data Problem"
+        text: "Marine Protected Areas (MPAs)"
 
 format:
   html:
