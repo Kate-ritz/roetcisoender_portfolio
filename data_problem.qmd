@@ -1,5 +1,5 @@
 ---
-title: "Example Data Problem"
+title: "An exploration of fish communities in California MPAs"
 format: html
 execute:
   echo: false
@@ -14,6 +14,22 @@ library(tidyverse)
 library(ggplot2)
 library(ggridges)
 ```
+
+### Data Description
+
+These datasets are from a summer of data collected in 2023, with the purpose of assessing the possible impacts of marine protected areas (MPAs) on the fish communities they protect. That summer, the Lindholm lab and I completed four week long data collection trips at four different MPAs along California's central and north coast. We deployed stereo camera systems for 45 minutes each, then took that video back to the lab and spent the fall collecting fish data from it. Stereo video specifically uses two cameras to triangulate objects where the frames overlap, allowing us to measure fish down to the millimeter without ever touching them. These data were eventually processed and submitted to inform MPA management.
+
+Here is the data: https://docs.google.com/spreadsheets/d/1KVd_7IsOHM9Xe1PDIf47Q4LnQt4J6QFjS5UL1i_GzpA/edit?gid=0#gid=0 
+
+Sheets:
+
+Drop_data - information on each camera system deployment
+
+3D_points - Each individual fish counted
+
+Lengths - The precise measurement of each fish able to be measured
+
+### Data Cleaning
 
 ```{r}
 drop <- read_csv("raw-data/drop.csv", col_types = list(Drop_ID = col_character()))
@@ -46,7 +62,8 @@ points_clean|>
   facet_grid(~ Location)+
   labs(x = "Species Richness", 
        y = "MPA Designation", 
-       title = "Species richness is generally higher in MPAs than reference sites") +
+       title = "Species richness is generally higher in MPAs than reference sites",
+       alt = "There are four sets of two boxplots, from locations Point Buchon, Point Lobos, Ano Nuevo, and Montara. Each site has a boxplot for within the MPA and outside the MPA. The y-xis is species richness, which ranges from 0 to 12.5. The species richness appears higher in every MPA except Ano Nuevo") +
   scale_color_viridis_d(end = 0.7) +
   scale_fill_manual(values = c("lightgray", "darkgray")) +
   theme_minimal() +
@@ -74,9 +91,9 @@ lengths_clean |>
                       alpha = 0.5) +
   labs(x = "Marine Protected Area Site",
        y = "Length (cm)",
-       title = "Distributions of fish size by site") +
+       title = "Distributions of fish size by site",
+       alt = "") +
   scale_color_viridis_d(end = 0.7) +
   guides(color = "none")
   
 ```
-
