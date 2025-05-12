@@ -47,7 +47,7 @@ Here is the data: https://docs.google.com/spreadsheets/d/1KVd_7IsOHM9Xe1PDIf47Q4
 
 ### Data Cleaning
 
-For the first visualization, I started with the 3D_points data and pulled out just the columns of OpCode and Common_name. Then, grouping by OpCode, I counted the number of unique values for Common_name. This is calculating the number of different species seen per sample, or species richness. I then take this information and add it to the Drop_data sheet. I then make minor changes such as renaming the species richness variable and ordering the locations from south to north before making the visualization. <br><br> For the second visualization, I used the lengths sheet, and pulled out columns Date, Location, Designation, Length (mm), OpCode, and Common_name. I then removed observations of Northern Anchovies. This was a pretty extreme outlier, where in one video, a bait ball of thousands of anchovies swam in view of the cameras. This was severely skewing the data, and only happened in one out of over 200 drops, so it was removed. Then I converted the lengths from millimeters to centimeters and ordered the locations from south to north before making the seconf visualization.
+For the first visualization, I started with the 3D_points data and pulled out just the columns of OpCode and Common_name. Then, grouping by OpCode, I counted the number of unique values for Common_name. This is calculating the number of different species seen per sample, or species richness. I then take this information and add it to the Drop_data sheet. I then make minor changes such as renaming the species richness variable and ordering the locations from south to north before making the visualization. <br><br> For the second visualization, I used the lengths sheet, and pulled out columns Date, Location, Designation, Length (mm), OpCode, and Common_name. I then removed observations of Northern Anchovies. This was a pretty extreme outlier, where in one video, a bait ball of thousands of anchovies swam in view of the cameras. This was severely skewing the data, and only happened in one out of over 200 drops, so it was removed. Then I converted the lengths from millimeters to centimeters and ordered the locations from south to north before making the second visualization.
 
 
 ```{r}
@@ -76,18 +76,21 @@ write_csv(lengths_clean, file = "clean-data/lengths-clean.csv")
 
 ### Figure 1
 
+Point Lobos has the highest species richness (number of different species), and Montara has the lowest. We would expect that the species richness decreases as we move northward, however, Point Lobos is the oldest State Marine Reserve (no take) in California, likely causing it to have higher richness than the more south Point Buchon. In all but Ano Nuevo, the MPA appears to have higher species richness than the reference site. Ano Nuevo may be an exception to this because it is a hard to access and poorly enforced MPA, likely causing there to be no difference inside and out of the MPA. The strongest difference is in Point Lobos, again likely due to it being the oldest no take zone in California.
+
 ```{r}
-points_clean|> 
+#| fig-alt: "There are four sets of two boxplots, from locations Point Buchon, Point Lobos, Ano Nuevo, and Montara. Each site has a boxplot for within the MPA and outside the MPA. The y-xis is species richness, which ranges from 0 to 12.5. The species richness appears higher in every MPA except Ano Nuevo."
+#| fig-cap: "Figure 1: Species richness is generally higher in MPAs than reference sites"
+
+points_clean |> 
   ggplot(aes(x = Designation, 
              y = Spp_richness, 
              color = Location, 
              fill = Designation)) +
   geom_boxplot() +
-  facet_grid(~ Location)+
+  facet_grid(~ Location) +
   labs(x = "Species Richness", 
-       y = "MPA Designation", 
-       title = "Species richness is generally higher in MPAs than reference sites",
-       alt = "There are four sets of two boxplots, from locations Point Buchon, Point Lobos, Ano Nuevo, and Montara. Each site has a boxplot for within the MPA and outside the MPA. The y-xis is species richness, which ranges from 0 to 12.5. The species richness appears higher in every MPA except Ano Nuevo.") +
+       y = "MPA Designation") +
   scale_color_viridis_d(end = 0.7) +
   scale_fill_manual(values = c("lightgray", "darkgray")) +
   theme_minimal() +
@@ -96,8 +99,12 @@ points_clean|>
 ```
 
 ### Figure 2
+Ano Nuevo appears to have the largest proportion of large fish. Point Buchon and Point Lobos have a large density of small fish, which are mostly young of the year rockfish, Suggesting these sites serve as nurseries. There is also a higher density as the graph moves from north to south. At our north most sites, there was a lot more sand and mud, as opposed to rocky habitat, so we saw less fish, as most fish like to aggregate over rocky substrate. Additionally, Ano Nuevo did not have many samples due to poor weather, leading to even fewer fish observations. Montara had a lower proportion of large fish, but did have several very large individuals, likely lingcod. 
 
 ```{r}
+#| fig-alt: "There are four density ridges, one for each site mentioned previously. The x axis is the size of fish in centimeters. The density ridges are filled with points each representing an individual fish. The ridges get higher based on how many points are in that size range. Ano Nuevo, Point Lobos, and Point Buchon had seemingly more big fish than Montara."
+#| fig-cap: "Figure 2: Distributions of fish size by site"
+
 lengths_clean |>   
   ggplot() +
   geom_density_ridges(aes(x = length_cm, 
@@ -106,9 +113,7 @@ lengths_clean |>
                       jittered_points = TRUE, 
                       alpha = 0.5) +
   labs(y = "Marine Protected Area Site",
-       x = "Length (cm)",
-       title = "Distributions of fish size by site",
-       alt = "There are four density ridges, one for each site mentioned previously. The x axis is the size of fish in centimeters. The density ridges are filled with points each representing an individual fish. The ridges get higher based on how many points are in that size range. Ano Nuevo, Point Lobos, and Point Buchon had seemingly more big fish than Montara.") +
+       x = "Length (cm)") +
   scale_color_viridis_d(end = 0.7) +
   guides(color = "none") +
   theme_minimal()
