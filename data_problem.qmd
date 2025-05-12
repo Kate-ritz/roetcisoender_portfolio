@@ -47,7 +47,7 @@ Here is the data: https://docs.google.com/spreadsheets/d/1KVd_7IsOHM9Xe1PDIf47Q4
 
 ### Data Cleaning
 
-For the first visualization, I started with the 3D_points data and pulled out just the columns of OpCode and Common_name. Then, grouping by OpCode, I counted the number of unique values for Common_name. This is calculating the number of different species seen per sample, or species richness. I then take this information and add it to the Drop_data sheet. I then make minor changes such as renaming variables and ordering values within variables before making the visualization. <br><br> 
+For the first visualization, I started with the 3D_points data and pulled out just the columns of OpCode and Common_name. Then, grouping by OpCode, I counted the number of unique values for Common_name. This is calculating the number of different species seen per sample, or species richness. I then take this information and add it to the Drop_data sheet. I then make minor changes such as renaming the species richness variable and ordering the locations from south to north before making the visualization. <br><br> For the second visualization, I used the lengths sheet, and pulled out columns Date, Location, Designation, Length (mm), OpCode, and Common_name. I then removed observations of Northern Anchovies. This was a pretty extreme outlier, where in one video, a bait ball of thousands of anchovies swam in view of the cameras. This was severely skewing the data, and only happened in one out of over 200 drops, so it was removed. Then I converted the lengths from millimeters to centimeters and ordered the locations from south to north before making the seconf visualization.
 
 
 ```{r}
